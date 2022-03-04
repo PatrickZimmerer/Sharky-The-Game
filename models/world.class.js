@@ -7,6 +7,7 @@ class World {
     keyboard;
     camera_x = -100;
     isDead = false;
+    statusBar = new Statusbar();
 
     constructor(canvas, keyboard){
         this.ctx = canvas.getContext('2d');
@@ -15,7 +16,6 @@ class World {
         this.draw();
         this.setWorld();
         this.checkCollisions();
-        this.checkDeath();
     }
 
     setWorld(){
@@ -27,17 +27,17 @@ class World {
             this.level.enemies.forEach( (enemy) => {
                 if(this.character.isColliding(enemy) ){
                     this.character.hit();
-                    console.log('energy is', this.character.energy)
+                    this.statusBar.setPercentage(this.character.energy);
+                    console.log(this.statusBar.percentage, this.character.energy)
                 }
             });
         }, 1000);
     }
 
-    checkDeath(){
+    isDead(){
         setInterval(() => {
             if (this.character.energy <= 0){
-                this.character.isDead = true;
-                console.log(this.character.isDead);
+                this.character.isDead();
             }
         }, 1000);
     }
@@ -45,9 +45,12 @@ class World {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
 
         this.ctx.translate(this.camera_x, 0);
-
+        this.addObjectsToMap(this.level.lights); 
         this.addObjectsToMap(this.level.backgroundObjects);
-        this.addObjectsToMap(this.level.lights);  
+        this.ctx.translate(-this.camera_x, 0); 
+        //------ SPACE FOR FIXED OBJECTS -------//
+        this.addToMap(this.statusBar);
+        this.ctx.translate(this.camera_x, 0);
         this.addToMap(this.character); 
         this.addObjectsToMap(this.level.enemies);
                

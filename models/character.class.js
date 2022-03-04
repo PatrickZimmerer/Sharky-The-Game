@@ -2,13 +2,13 @@ class Character extends MovableObject {
 
     height = 400;
     width = 300;
-    offsetW = 100;
-    offsetH = 80;
-    offsetX = 190;
-    offsetY = 50;
+    offsetW = 80;
+    offsetH = 100;
+    offsetX = 20;
+    offsetY = 250;
     y = 50;
-    speed = 5;
-    isDead;
+    speed = 3;
+    isHit;
     IMAGES_IDLE = [
         './img/1.Sharkie/1.IDLE/1.png',
         './img/1.Sharkie/1.IDLE/2.png',
@@ -97,13 +97,17 @@ class Character extends MovableObject {
         }, 1000/60);
 
         setInterval(() => {
-            if (this.isDead) {
+
+            if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
+            }else if (this.isHurt()){
+                this.playAnimation(this.IMAGES_HURT)
             }else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP || this.world.keyboard.DOWN){
                 this.playAnimation(this.IMAGES_SWIMMING);                
             }else{
                 this.playAnimation(this.IMAGES_IDLE);
             }
+
         }, 200);
 
         

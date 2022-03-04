@@ -17,7 +17,7 @@ class Enemy extends MovableObject {
     constructor() {
         super().loadImage('./img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/2.swim1.png');  
         this.loadImages(this.IMAGES_SWIMMING);
-        this.x = 400 + Math.random() * 2500; // Zahl zw 200 und 700
+        this.x = 600 + Math.random() * 2100; // Zahl zw 200 und 700
         this.y = -20 + Math.random() * 600
         this.speed = 0.2 + Math.random() * 0.4;
         this.speedY = 0.02 + Math.random() * 0.4;

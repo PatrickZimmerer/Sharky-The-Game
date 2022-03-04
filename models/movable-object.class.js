@@ -1,4 +1,10 @@
 class MovableObject {
+
+    offsetW = 0;
+    offsetH = 0;
+    offsetX = 0;
+    offsetY = 0;
+    
     x = 100;
     y = 130;
     img;
@@ -9,6 +15,7 @@ class MovableObject {
     speed = 0.04;
     speedY = 0.04;
     otherDirection = false;
+    energy = 100;
     
     loadImage(path){
         this.img = new Image();  // this.img = document.getElementById('image') <img id="image" src>
@@ -40,7 +47,8 @@ class MovableObject {
 
     drawFrame(ctx){
 
-        if(this instanceof Character || this instanceof Enemy || this instanceof Endboss){
+        if(this instanceof Character || this instanceof Enemy || 
+           this instanceof Endboss){
         ctx.beginPath();
         ctx.lineWidth = "3";
         ctx.strokeStyle = "blue";
@@ -50,9 +58,25 @@ class MovableObject {
     }
     
     isColliding(movableObj) {
-        return this.x + this.width > movableObj.x && this.y + this.height >
-            movableObj.y && this.x < movableObj.x && this.y < movableObj.y
-             + movableObj.height
+        return this.x + this.width - this.offsetW > movableObj.x && 
+        this.y + this.height - this.offsetH > movableObj.y && 
+        this.x + this.offsetX < movableObj.x && 
+        this.y + this.offsetY < movableObj.y + movableObj.height;
+    }
+
+    hit(){
+        this.energy -= 10;
+        if (this.energy < 0) {
+            this.energy = 0;
+        }
+    }
+
+    isDead() {
+        return this.energy == 0;
+    }
+
+    isHurt() {
+
     }
 
     playAnimation(images){

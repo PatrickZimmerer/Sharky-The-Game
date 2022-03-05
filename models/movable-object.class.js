@@ -51,13 +51,6 @@ class MovableObject extends DrawableObject {
         return this.energy == 0;
     }
 
-    playAnimation(images){
-        let i = this.currentImage % images.length; // i = 0, 1, 2, ... 6, 0, 1, 2
-        let path = images[i];
-        this.img = this.imageCache[path];
-        this.currentImage++;
-    }
-
     moveLeft(){        
         this.x -= this.speed;
     }

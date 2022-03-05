@@ -8,7 +8,9 @@ class Character extends MovableObject {
     offsetY = 250;
     y = 50;
     speed = 3;
-    isHit;
+    coins = 0;
+    bottles = 0;
+
     IMAGES_IDLE = [
         './img/1.Sharkie/1.IDLE/1.png',
         './img/1.Sharkie/1.IDLE/2.png',
@@ -28,7 +30,7 @@ class Character extends MovableObject {
         './img/1.Sharkie/1.IDLE/16.png',
         './img/1.Sharkie/1.IDLE/17.png',
         './img/1.Sharkie/1.IDLE/18.png'
-    ]
+    ];
     IMAGES_SWIMMING = [
         './img/1.Sharkie/3.Swim/1.png',
         './img/1.Sharkie/3.Swim/2.png',
@@ -57,7 +59,6 @@ class Character extends MovableObject {
         './img/1.Sharkie/6.dead/1.Poisoned/11.png',
         './img/1.Sharkie/6.dead/1.Poisoned/12.png'
     ];
-    world;
     swimming_sound = new Audio('./audio/swimming.mp3');
 
     constructor(){
@@ -67,6 +68,36 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_HURT);
         this.animate();
+    }
+
+    collectCoin(){
+        this.coins += 20;
+        if (this.coins >= 100) {
+            this.coins = 100;
+            console.log(this.coins);
+        }
+    }
+
+    loseCoin(){
+        this.coins -= 10;
+        if (this.coins <= 0) {
+            this.coins = 0;
+            console.log(this.coins);
+        }
+    }
+
+    collectBottle(){
+        this.bottles += 20;
+        if (this.bottles >= 100) {
+            this.bottles = 100
+        }
+    }
+
+    collectHeart(){
+        this.energy +=20;
+        if (this.energy >= 100) {
+            this.energy = 100;
+        }
     }
 
     animate() {

@@ -31,7 +31,7 @@ class Character extends MovableObject {
         './img/1.Sharkie/1.IDLE/17.png',
         './img/1.Sharkie/1.IDLE/18.png'
     ];
-    IMAGES_SWIMMING = [
+    IMAGES_SWIM = [
         './img/1.Sharkie/3.Swim/1.png',
         './img/1.Sharkie/3.Swim/2.png',
         './img/1.Sharkie/3.Swim/3.png',
@@ -39,6 +39,16 @@ class Character extends MovableObject {
         './img/1.Sharkie/3.Swim/5.png',
         './img/1.Sharkie/3.Swim/6.png'
     ];
+    IMAGES_ATTACK = [
+        './img/1.Sharkie/4.Attack/Bubble trap/For Whale/1.png',
+        './img/1.Sharkie/4.Attack/Bubble trap/For Whale/2.png',
+        './img/1.Sharkie/4.Attack/Bubble trap/For Whale/3.png',
+        './img/1.Sharkie/4.Attack/Bubble trap/For Whale/4.png',
+        './img/1.Sharkie/4.Attack/Bubble trap/For Whale/5.png',
+        './img/1.Sharkie/4.Attack/Bubble trap/For Whale/6.png',
+        './img/1.Sharkie/4.Attack/Bubble trap/For Whale/7.png',
+        './img/1.Sharkie/4.Attack/Bubble trap/For Whale/8.png',
+    ]
     IMAGES_HURT = [
         './img/1.Sharkie/5.Hurt/1.Poisoned/1.png',
         './img/1.Sharkie/5.Hurt/1.Poisoned/2.png',
@@ -59,14 +69,16 @@ class Character extends MovableObject {
         './img/1.Sharkie/6.dead/1.Poisoned/11.png',
         './img/1.Sharkie/6.dead/1.Poisoned/12.png'
     ];
-    swimming_sound = new Audio('./audio/swimming.mp3');
+    swim_sound = new Audio('./audio/swim.mp3');
+
 
     constructor(){
         super().loadImage('./img/1.Sharkie/1.IDLE/1.png');
-        this.loadImages(this.IMAGES_SWIMMING);
+        this.loadImages(this.IMAGES_SWIM);
         this.loadImages(this.IMAGES_IDLE);
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_HURT);
+        this.loadImages(this.IMAGES_ATTACK);
         this.animate();
     }
 
@@ -79,7 +91,7 @@ class Character extends MovableObject {
     }
 
     loseCoin(){
-        this.coins -= 10;
+        this.coins -= 5;
         if (this.coins <= 0) {
             this.coins = 0;
             console.log(this.coins);
@@ -106,23 +118,23 @@ class Character extends MovableObject {
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x){
                 this.moveRight();
                 this.otherDirection = false;
-                //this.swimming_sound.play();
+                this.swim_sound.play();
             }
             
             if (this.world.keyboard.LEFT && this.x > -1000){
                 this.moveLeft();
                 this.otherDirection = true;
-                //this.swimming_sound.play();
+                this.swim_sound.play();
             }
 
             if (this.world.keyboard.UP && this.y > this.world.level.level_top_y){
                 this.moveUp();
-                //this.swimming_sound.play();
+                this.swim_sound.play();
             }
 
             if (this.world.keyboard.DOWN && this.y < this.world.level.level_bottom_y){
                 this.moveDown();
-                //this.swimming_sound.play();
+                this.swim_sound.play();
             }
             this.world.camera_x = -this.x + 80;
         }, 1000/60);
@@ -134,16 +146,15 @@ class Character extends MovableObject {
             }else if (this.isHurt()){
                 this.playAnimation(this.IMAGES_HURT)
             }else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP || this.world.keyboard.DOWN){
-                this.playAnimation(this.IMAGES_SWIMMING);                
+                this.playAnimation(this.IMAGES_SWIM);                
+            }else if (this.world.keyboard.SPACE){
+                this.playAnimation(this.IMAGES_ATTACK);
             }else{
                 this.playAnimation(this.IMAGES_IDLE);
             }
 
         }, 200);
-
-        
+ 
     }
 
-    
-    
 }

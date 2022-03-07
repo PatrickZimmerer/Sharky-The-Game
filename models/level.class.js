@@ -4,7 +4,6 @@ class Level {
     coins;
     bottles;
     backgroundObjects;
-    //throwableObjects;
     level_end_x = 2100;
     level_bottom_y = 180;
     level_top_y = -165;
@@ -16,6 +15,5 @@ class Level {
         this.coins = coins;
         this.bottles = bottles;
         this.hearts = hearts;
-        //this.throwableObjects = throwableObjects
     }
 }

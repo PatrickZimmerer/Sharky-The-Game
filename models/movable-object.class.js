@@ -6,11 +6,13 @@ class MovableObject extends DrawableObject {
     offsetY = 0;
 
     speed = 0.04;
-    speedY = 0.04;
+    speedY = 0.5;
+    acceleration = 1;
     otherDirection = false;
     energy = 100;
 
     lastHit = 0;
+    
     
     flipImage(ctx){
         ctx.save();
@@ -24,6 +26,19 @@ class MovableObject extends DrawableObject {
         this.x = this.x * -1;
     }
 
+    applyGravity() {
+        setInterval(() => {
+            if (this.isAboveGround() || this.speedY > 0) {
+                this.y -= this.speedY;
+                this.speedY -= this.acceleration;
+            }
+        }, 1000 / 25)
+    }
+
+    isAboveGround(){
+
+        return this.y < 1550;
+    }
     
     isColliding(movableObj) {
         return this.x + this.width - this.offsetW > movableObj.x && 
@@ -33,7 +48,7 @@ class MovableObject extends DrawableObject {
     }
 
     hit(){
-        this.energy -= 20;
+        this.energy -= 10;
         if (this.energy < 0) {
             this.energy = 0;
         } else {

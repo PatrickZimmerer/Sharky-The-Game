@@ -2,7 +2,48 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 0;
+    background-image: url('/img/3.\ Background/Light/full.png');
+    height: 100vh;
+    background-size: cover;
+    overflow-x: hidden;
+}
+h1{
+    margin-block-end: 0;
+    margin-block-start: 0;
+    padding: 8px;
+    font-size: 32px;
+    font-weight: 700;
 }
 canvas{
     background-color: black;
+    border: 2px solid black;
+}
+
+.controls{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.controls div{
+    display: flex;
+    flex-direction: column;
+}
+img{
+    height: 100px;
+    padding: 12px 24px 0;
+}
+.move {
+    width: 250px;
+    height: 45px;
+}
+.keys{
+    width: 250px;
+}
+.attack{
+    width: 400px;
+    height: 45px;
+}
+.spacebar{
+    width: 400px;
 }

@@ -42,11 +42,11 @@ class World {
 
     checkCoinCollisions(){
         setInterval(() => {
-            this.level.coins.forEach( (coin) => {
-                if(this.character.isColliding(coin) ){
+            this.level.coins.forEach( (coin, index) => {
+                if(this.character.isColliding(coin) && !coin.deletable ){
                     this.character.collectCoin();
-                    // jeweiliges Coin img löschen
                     this.coinBar.setBar(this.character.coins);
+                    this.level.coins.splice(index, 1);
                 }
             });
             
@@ -55,11 +55,11 @@ class World {
 
     checkBottleCollisions(){
         setInterval(() => {
-            this.level.bottles.forEach( (bottle) => {
+            this.level.bottles.forEach( (bottle, index) => {
                 if(this.character.isColliding(bottle) ){
                     this.character.collectBottle();
-                    // jeweiliges Bottle img löschen
                     this.bottleBar.setBar(this.character.bottles);
+                    this.level.bottles.splice(index, 1);
                 }
             });
         }, 1000);
@@ -67,11 +67,11 @@ class World {
 
     checkHeartCollisions(){
         setInterval(() => {
-            this.level.hearts.forEach( (heart) => {
+            this.level.hearts.forEach( (heart, index) => {
                 if(this.character.isColliding(heart) ){
                     this.character.collectHeart();
-                    // jeweiliges Heart img löschen
                     this.statusBar.setPercentage(this.character.energy);
+                    this.level.hearts.splice(index, 1);
                 }
             });
         }, 1000);

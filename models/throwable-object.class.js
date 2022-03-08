@@ -7,6 +7,7 @@ class ThrowableObject extends MovableObject {
         this.width = 40;
         this.applyGravity();
         this.throw();
+        
     }
 
     throw() {     

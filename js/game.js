@@ -8,10 +8,16 @@ function getById(id){
 }
 
 function init(){
-    
+    getById('fullscreen').classList.remove('d-none');
+    getById('wrapper').classList.add('d-none');
     canvas = getById('canvas');
+    canvas.classList.remove('d-none');
     world = new World(canvas, keyboard);
 
+}
+
+function fullscreen(){
+    canvas.requestFullscreen();
 }
 
 window.addEventListener('keydown', (e) =>{

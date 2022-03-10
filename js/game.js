@@ -3,22 +3,26 @@ let world;
 let keyboard = new Keyboard();
 let e;
 
+
 function getById(id){
     return document.getElementById(id);
 }
 
+
 function init(){
     getById('fullscreen').classList.remove('d-none');
-    getById('wrapper').classList.add('d-none');
+    getById('startGame').classList.add('d-none');
     canvas = getById('canvas');
     canvas.classList.remove('d-none');
+    initLevel();
     world = new World(canvas, keyboard);
-
 }
+
 
 function fullscreen(){
     canvas.requestFullscreen();
 }
+
 
 window.addEventListener('keydown', (e) =>{
     if(e.keyCode == 39){
@@ -35,9 +39,9 @@ window.addEventListener('keydown', (e) =>{
     }
     if(e.keyCode == 32){
         keyboard.SPACE = true;
-    }
-    
+    } 
 });
+
 
 window.addEventListener('keyup', (e) =>{
     if(e.keyCode == 39){

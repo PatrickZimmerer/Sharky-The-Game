@@ -4,7 +4,9 @@ class Endboss extends MovableObject {
     width = 280;
     y = -20;
     x = 1800;
-    IMAGES_SPAWNING = [
+    hadFirstContact = false;
+    energy = 50;
+    IMAGES_SPAWN = [
         './img/2.Enemy/3 Final Enemy/1.Introduce/1.png',
         './img/2.Enemy/3 Final Enemy/1.Introduce/2.png',
         './img/2.Enemy/3 Final Enemy/1.Introduce/3.png',
@@ -16,7 +18,7 @@ class Endboss extends MovableObject {
         './img/2.Enemy/3 Final Enemy/1.Introduce/9.png',
         './img/2.Enemy/3 Final Enemy/1.Introduce/10.png'
     ];
-    IMAGES_SWIMMING = [
+    IMAGES_SWIM = [
         './img/2.Enemy/3 Final Enemy/2.floating/1.png',
         './img/2.Enemy/3 Final Enemy/2.floating/2.png',
         './img/2.Enemy/3 Final Enemy/2.floating/3.png',
@@ -31,28 +33,53 @@ class Endboss extends MovableObject {
         './img/2.Enemy/3 Final Enemy/2.floating/12.png',
         './img/2.Enemy/3 Final Enemy/2.floating/13.png'
     ];
+    IMAGES_HURT = [
+        './img/2.Enemy/3 Final Enemy/Hurt/1.png',
+        './img/2.Enemy/3 Final Enemy/Hurt/2.png',
+        './img/2.Enemy/3 Final Enemy/Hurt/3.png',
+        './img/2.Enemy/3 Final Enemy/Hurt/4.png'
+    ];
+    IMAGES_DEAD = [
+        './img/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 6.png',
+        './img/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 7.png',
+        './img/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 8.png',
+        './img/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 9.png',
+        './img/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 10.png',
+    ];
 
 
     constructor() {
         super().loadImage('./img/2.Enemy/3 Final Enemy/2.floating/1.png');
-        this.loadImages(this.IMAGES_SPAWNING);
-        this.loadImages(this.IMAGES_SWIMMING); 
+        this.loadImages(this.IMAGES_SPAWN);
+        this.loadImages(this.IMAGES_SWIM); 
+        this.loadImages(this.IMAGES_HURT);
+        this.loadImages(this.IMAGES_DEAD);
         this.animate();
     }
+
 
     animate() {
         let i = 0
         setInterval(() => {
-            
-            if (i < 10) {
-                this.playAnimation(this.IMAGES_SPAWNING);
-            } else {
-                this.playAnimation(this.IMAGES_SWIMMING);
-            }
-            
-            i++
-        }, 150);
-        
+            this.endbossInteractions(i);
+        }, 150);        
     }
 
+    
+    endbossInteractions(i){
+        if (world.character.x > 1300 && !this.hadFirstContact){
+            i = 0;
+            this.hadFirstContact = true;
+            console.log(this.hadFirstContact);
+        }
+        if (i < 10 && this.hadFirstContact) {
+            this.playAnimation(this.IMAGES_SPAWN);
+        }else if (this.isHurt()){
+            this.playAnimation(this.IMAGES_HURT);
+        }else if (this.isDead()){
+            this.playAnimation(this.IMAGES_DEAD);
+        }else{
+            this.playAnimation(this.IMAGES_SWIM);
+        }
+    }
 }

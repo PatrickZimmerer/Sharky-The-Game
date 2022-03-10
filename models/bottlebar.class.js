@@ -8,6 +8,7 @@ class Bottlebar extends DrawableObject {
         './img/4. Marcadores/Purple/0_.png',
     ];
 
+
     constructor(){
         super();
         this.loadImages(this.IMAGES_BOTTLE_BAR);
@@ -17,12 +18,12 @@ class Bottlebar extends DrawableObject {
         this.width = 160;
         this.setBar(0);
     }
+    
 
     setBar(percentage){
         this.percentage = percentage;
         let path = this.IMAGES_BOTTLE_BAR[this.resolveImageIndex()];
         this.img = this.imageCache[path];
     }
-
 
 }

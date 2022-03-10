@@ -1,4 +1,7 @@
-const level1 = new Level(
+let level1;
+function initLevel() {
+
+level1 = new Level(
     [    
     new Enemy(),
     new Enemy(),
@@ -68,3 +71,4 @@ const level1 = new Level(
         new Heart()
     ]
     );
+}

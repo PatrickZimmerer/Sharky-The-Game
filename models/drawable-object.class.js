@@ -8,10 +8,12 @@ class DrawableObject {
     imageCache = {};
     currentImage = 0;
 
+
     loadImage(path){
         this.img = new Image();  // this.img = document.getElementById('image') <img id="image" src>
         this.img.src = path;
     }
+
 
     loadImages(arr){
         arr.forEach((path) => {
@@ -21,6 +23,7 @@ class DrawableObject {
         });
     }
     
+
     playAnimation(images){
         let i = this.currentImage % images.length; // i = 0, 1, 2, ... 6, 0, 1, 2
         let path = images[i];
@@ -28,10 +31,12 @@ class DrawableObject {
         this.currentImage++;
     }
 
+
     draw(ctx){
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     }
     
+
     drawFrame(ctx){
 
         if(this instanceof Character || this instanceof Enemy || 
@@ -44,6 +49,7 @@ class DrawableObject {
         ctx.stroke();
         }
     }
+    
 
     resolveImageIndex(){
         if (this.percentage >= 100) {

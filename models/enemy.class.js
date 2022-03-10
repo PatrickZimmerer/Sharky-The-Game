@@ -5,6 +5,7 @@ class Enemy extends MovableObject {
     offsetY = 0;
     height = 80;
     width = 100;
+    energy = 10;
     IMAGES_SWIMMING = [
         './img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/2.swim1.png',
         './img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/2.swim2.png',
@@ -25,27 +26,16 @@ class Enemy extends MovableObject {
         
     }
 
+
     animate() {
         setInterval( () => {
         this.moveLeft();
         }, 1000 / 60);
 
-        /*setInterval( () => {
-            if (this.y >= 180 ) {
-                this.moveDown();
-                if (this.y <= 0) {
-                this.moveUp();
-                } 
-            }
-            } 
-        , 1000 / 60);
-        */
-
         setInterval(() => {
             this.playAnimation(this.IMAGES_SWIMMING);
         }, 150);
     }
-
 
 }
     

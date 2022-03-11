@@ -54,6 +54,7 @@ class World {
         }, 400);
     }
 
+
     setWorld(){
         this.character.world = this;
     }
@@ -234,44 +235,4 @@ class World {
         }   
     }
     
-
-    // preloadImages(imagesVar) {
-
-    //     for (let i = 0; i < imagesVar.length; i++) {
-      
-    //       let image = new Image();
-      
-    //       image.src = imagesVar[i];
-      
-    //       images.push(image); // push image-path to images-array (which contains all image-paths)
-      
-    //     }
-      
-    // }
-
-    // checkBackgroundImageCache(src_path) {
-
-    //     // Check if image is found in images-array.
-      
-    //     base_image = images.find(function (img) {
-      
-    //       return img.src.endsWith(src_path.substring(src_path, src_path.length));
-      
-    //     })
-      
-        
-      
-    //     // Create new image if not found in cache
-      
-    //     if (!base_image) {
-      
-    //       base_image = new Image();
-      
-    //       base_image.src = src_path;
-      
-    //     }
-        
-    //     return base_image;
-      
-    // }
 }

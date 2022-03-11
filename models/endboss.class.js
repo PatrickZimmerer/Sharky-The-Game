@@ -5,7 +5,6 @@ class Endboss extends MovableObject {
     y = -20;
     x = 1800;
     hadFirstContact = false;
-    energy = 50;
     IMAGES_SPAWN = [
         './img/2.Enemy/3 Final Enemy/1.Introduce/1.png',
         './img/2.Enemy/3 Final Enemy/1.Introduce/2.png',
@@ -54,25 +53,27 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_SWIM); 
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
+        this.i = 0;
+        this.energy = 60;
         this.animate();
     }
 
 
     animate() {
-        let i = 0
         setInterval(() => {
-            this.endbossInteractions(i);
+            this.endbossInteractions();
         }, 150);        
     }
 
     
-    endbossInteractions(i){
+    endbossInteractions(){
         if (world.character.x > 1300 && !this.hadFirstContact){
-            i = 0;
+            this.i = 0;
             this.hadFirstContact = true;
             console.log(this.hadFirstContact);
         }
-        if (i < 10 && this.hadFirstContact) {
+        this.i++;
+        if (this.i < 10 && this.hadFirstContact) {
             this.playAnimation(this.IMAGES_SPAWN);
         }else if (this.isHurt()){
             this.playAnimation(this.IMAGES_HURT);

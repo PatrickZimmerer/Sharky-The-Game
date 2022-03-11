@@ -22,6 +22,8 @@ class World {
     heal_sound = new Audio('./audio/heal.mp3');
     bottle_sound = new Audio('./audio/bottle.mp3');
     bubble_sound = new Audio('./audio/bubble.mp3');
+    lose_sound = new Audio('./audio/lose.mp3');
+    hit_sound = new Audio('./audio/hitmarker.mp3');
 
 
     constructor(canvas, keyboard){
@@ -38,12 +40,16 @@ class World {
     checkGameState(){
         setInterval(() => {
         if (this.character.energy == 0) {
+            this.character.swim_sound.volume = 0;
+            setTimeout(() => {  
+            this.hurt_sound.volume = 0;             
             this.lose = true;
-            this.system.sound.volume = 0;
+            }, 1400);
         }
         if (this.endboss.energy == 0) {
-            console.log('you win')
-            this.win = true;
+            this.win = true;           
+            this.hurt_sound.volume = 0;
+            this.character.swim_sound.volume = 0;
         }
         }, 400);
     }
@@ -60,7 +66,12 @@ class World {
             this.checkBottleCollisions();
             this.checkHeartCollisions();
             this.checkThrowObjects();
-        }, 200);
+        },200);
+        setInterval(() => {
+            this.checkEnemyHit();
+        },25)
+            
+        
     }
     
 
@@ -71,25 +82,29 @@ class World {
             this.bubble_sound.play();
             this.character.bottles -=10;
             this.bottleBar.setBar(this.character.bottles);
-            this.checkEnemyHit();
+
         }
     }
 
 
     checkEnemyHit(){
-            
-        
-        this.throwableObjects.forEach( (enemy) => {
-            if(this.throwableObject.isColliding(enemy) ){
-                console.log('enemy hit');
-                this.enemy.hit();
-            }
+        this.throwableObjects.forEach( (obj) => {
+            this.level.enemies.forEach((enemy, index) =>{
+                if (enemy.isColliding(obj) && !enemy.isHurt()) {
+                    enemy.hit();
+                    this.hit_sound.play();
+                    if (enemy.energy == 0){
+                        this.level.enemies.splice(index, 1);
+                    }
+                }
+            });
         });
     }
 
+
     checkEnemyCollisions(){
         this.level.enemies.forEach( (enemy) => {
-            if(this.character.isColliding(enemy) ){
+            if(this.character.isColliding(enemy) && !this.character.isHurt() ){
                 this.character.hit();
                 this.character.loseCoin();
                 this.coinBar.setBar(this.character.coins);
@@ -135,16 +150,14 @@ class World {
                 }
             });
     }
-    
+
 
     draw() {
         if(!this.lose && !this.win) {
             this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
             this.ctx.translate(this.camera_x, 0);
             this.addBackgrounds();
-            this.ctx.translate(-this.camera_x, 0); 
-            this.addBars();  // SPACE FOR FIXED OBJECTS
-            this.ctx.translate(this.camera_x, 0);                         
+            this.addStaticObjects();                         
             this.addToMap(this.character);
             this.addAllObjectsToMap();
             this.ctx.translate(-this.camera_x, 0);
@@ -152,20 +165,35 @@ class World {
             requestAnimationFrame(function() {
                 self.draw();
             });
-        }else if(!this.lose && this.win) {
-            this.addToMap(this.youWin);
-        }else if(this.lose && !this.win) {
-            this.addToMap(this.gameOver);
-            this.showTryAgain();
+        }else if(this.win && !this.lose){      
+            this.winScreen();
+        }else if(this.lose && !this.win){
+            this.loseScreen();
         } 
 
     }
 
-    showTryAgain(){
+
+    winScreen(){
+        this.addToMap(this.youWin);
         document.getElementById('tryAgain').classList.remove('d-none');
     }
 
 
+    loseScreen(){
+        this.lose_sound.play();
+        this.addToMap(this.gameOver);
+        document.getElementById('tryAgain').classList.remove('d-none');
+    }
+
+
+    addStaticObjects(){
+        this.ctx.translate(-this.camera_x, 0); 
+        this.addBars();  // SPACE FOR FIXED OBJECTS
+        this.ctx.translate(this.camera_x, 0);
+    }
+
+    
     addBars(){
         this.addToMap(this.statusBar);
         this.addToMap(this.coinBar);

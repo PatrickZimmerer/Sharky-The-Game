@@ -72,7 +72,6 @@ class Character extends MovableObject {
     ];
     swim_sound = new Audio('./audio/swim.mp3');
     
-    lose_sound = new Audio('./audio/lose.mp3');
 
 
     constructor(){
